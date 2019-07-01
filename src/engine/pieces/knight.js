@@ -6,6 +6,22 @@ export default class Knight extends Piece {
     }
 
     getAvailableMoves(board) {
-        return new Array(0);
+        let moves = [];
+
+        const currentSquare = board.findPiece(this);
+
+        this.addSquareToArray(moves, currentSquare.row + 2, currentSquare.col + 1, board, true);
+        this.addSquareToArray(moves, currentSquare.row + 1, currentSquare.col + 2, board, true);
+
+        this.addSquareToArray(moves, currentSquare.row - 2, currentSquare.col + 1, board, true);
+        this.addSquareToArray(moves, currentSquare.row - 1, currentSquare.col + 2, board, true);
+
+        this.addSquareToArray(moves, currentSquare.row + 2, currentSquare.col - 1, board, true);
+        this.addSquareToArray(moves, currentSquare.row + 1, currentSquare.col - 2, board, true);
+        
+        this.addSquareToArray(moves, currentSquare.row - 2, currentSquare.col - 1, board, true);
+        this.addSquareToArray(moves, currentSquare.row - 1, currentSquare.col - 2, board, true);
+
+        return moves;
     }
 }
