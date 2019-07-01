@@ -5,7 +5,8 @@ export default class Knight extends Piece {
         super(player);
     }
 
-    getAvailableMoves(board) {
+    getMovesToConsider(board) {
+        this.isGivingCheck = false;
         let moves = [];
 
         const currentSquare = board.findPiece(this);
@@ -21,7 +22,11 @@ export default class Knight extends Piece {
         
         this.addSquareToArray(moves, currentSquare.row - 2, currentSquare.col - 1, board, true, this.player);
         this.addSquareToArray(moves, currentSquare.row - 1, currentSquare.col - 2, board, true, this.player);
-
+    
         return moves;
+    }
+
+    getAvailableMoves(board) {
+        return this.discardIllegalMoves(this.getMovesToConsider(board), board.findPiece(this), board);
     }
 }

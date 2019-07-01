@@ -5,7 +5,8 @@ export default class Rook extends Piece {
         super(player);
     }
 
-    getAvailableMoves(board) {
+    getMovesToConsider(board) {
+        this.isGivingCheck = false;
         let moves = [];
 
         const currentSquare = board.findPiece(this);
@@ -17,5 +18,9 @@ export default class Rook extends Piece {
         for (let i = 1; this.addSquareToArray(moves, currentSquare.row, currentSquare.col - i, board, true, this.player); i++);
 
         return moves;
+    }
+
+    getAvailableMoves(board) {
+        return this.discardIllegalMoves(this.getMovesToConsider(board), board.findPiece(this), board);
     }
 }

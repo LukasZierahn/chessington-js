@@ -16,7 +16,7 @@ describe('Queen', () => {
         const queen = new Queen(Player.WHITE);
         board.setPiece(Square.at(2, 3), queen);
 
-        const moves = queen.getAvailableMoves(board);
+        const moves = queen.getMovesToConsider(board);
 
         const expectedMoves = [
             // Horizontal
@@ -32,7 +32,7 @@ describe('Queen', () => {
         const queen = new Queen(Player.WHITE);
         board.setPiece(Square.at(2, 3), queen);
 
-        const moves = queen.getAvailableMoves(board);
+        const moves = queen.getMovesToConsider(board);
 
         const expectedMoves = [
             // Forwards diagonal
@@ -48,7 +48,7 @@ describe('Queen', () => {
         const queen = new Queen(Player.WHITE);
         board.setPiece(Square.at(2, 3), queen);
 
-        const moves = queen.getAvailableMoves(board);
+        const moves = queen.getMovesToConsider(board);
 
         moves.should.have.length(25);
     });
@@ -59,7 +59,7 @@ describe('Queen', () => {
         board.setPiece(Square.at(4, 4), queen);
         board.setPiece(Square.at(4, 6), friendlyPiece);
 
-        const moves = queen.getAvailableMoves(board);
+        const moves = queen.getMovesToConsider(board);
 
         moves.should.not.deep.include(Square.at(4, 7));
     });
@@ -70,7 +70,7 @@ describe('Queen', () => {
         board.setPiece(Square.at(4, 4), queen);
         board.setPiece(Square.at(4, 6), opposingPiece);
 
-        const moves = queen.getAvailableMoves(board);
+        const moves = queen.getMovesToConsider(board);
 
         moves.should.not.deep.include(Square.at(4, 7));
     });
@@ -81,7 +81,7 @@ describe('Queen', () => {
         board.setPiece(Square.at(4, 4), queen);
         board.setPiece(Square.at(4, 6), opposingPiece);
 
-        const moves = queen.getAvailableMoves(board);
+        const moves = queen.getMovesToConsider(board);
 
         moves.should.deep.include(Square.at(4, 6));
     });
@@ -103,8 +103,25 @@ describe('Queen', () => {
         board.setPiece(Square.at(4, 4), queen);
         board.setPiece(Square.at(4, 6), friendlyPiece);
 
-        const moves = queen.getAvailableMoves(board);
+        const moves = queen.getMovesToConsider(board);
 
         moves.should.not.deep.include(Square.at(4, 6));
     });
+
+    it('cant move such that you are in check', () => {
+        const queen = new Queen(Player.WHITE);
+        const queenBlack = new Queen(Player.BLACK);
+        const king = new King(Player.WHITE);
+        const kingBlack = new King(Player.BLACK);
+
+        board.setPiece(Square.at(2, 4), king);
+        board.setPiece(Square.at(3, 4), queen);
+        board.setPiece(Square.at(5, 4), queenBlack);
+        board.setPiece(Square.at(6, 4), kingBlack);
+
+        const moves = queen.getAvailableMoves(board);
+
+        moves.should.deep.eql([Square.at(4, 4), Square.at(5, 4)]);
+    });
+
 });

@@ -15,7 +15,7 @@ describe('Knight', () => {
         const knight = new Knight(Player.WHITE);
         board.setPiece(Square.at(4, 4), knight);
 
-        const moves = knight.getAvailableMoves(board);
+        const moves = knight.getMovesToConsider(board);
 
         const expectedMoves = [
             Square.at(2, 5), Square.at(2, 3), Square.at(3, 6), Square.at(3, 2),
@@ -29,7 +29,7 @@ describe('Knight', () => {
         const knight = new Knight(Player.WHITE);
         board.setPiece(Square.at(4, 4), knight);
 
-        const moves = knight.getAvailableMoves(board);
+        const moves = knight.getMovesToConsider(board);
 
         moves.should.have.length(8);
     });
@@ -42,7 +42,7 @@ describe('Knight', () => {
         board.setPiece(Square.at(3, 4), firstPawn);
         board.setPiece(Square.at(3, 5), secondPawn);
 
-        const moves = knight.getAvailableMoves(board);
+        const moves = knight.getMovesToConsider(board);
 
         moves.should.deep.include(Square.at(2, 5));
     });
@@ -51,7 +51,7 @@ describe('Knight', () => {
         const knight = new Knight(Player.WHITE);
         board.setPiece(Square.at(0, 0), knight);
 
-        const moves = knight.getAvailableMoves(board);
+        const moves = knight.getMovesToConsider(board);
 
         const expectedMoves = [Square.at(1, 2), Square.at(2, 1)];
 
@@ -64,7 +64,7 @@ describe('Knight', () => {
         board.setPiece(Square.at(4, 4), knight);
         board.setPiece(Square.at(3, 6), opposingPiece);
 
-        const moves = knight.getAvailableMoves(board);
+        const moves = knight.getMovesToConsider(board);
 
         moves.should.deep.include(Square.at(3, 6));
     });
@@ -86,7 +86,7 @@ describe('Knight', () => {
         board.setPiece(Square.at(4, 4), knight);
         board.setPiece(Square.at(3, 6), friendlyPiece);
 
-        const moves = knight.getAvailableMoves(board);
+        const moves = knight.getMovesToConsider(board);
 
         moves.should.not.deep.include(Square.at(3, 6));
     });

@@ -5,7 +5,8 @@ export default class Bishop extends Piece {
         super(player);
     }
 
-    getAvailableMoves(board) {
+    getMovesToConsider(board) {
+        this.isGivingCheck = false;
         let moves = [];
 
         const currentSquare = board.findPiece(this);
@@ -13,9 +14,13 @@ export default class Bishop extends Piece {
         //adding the squares in all directions
         for (let i = 1; this.addSquareToArray(moves, currentSquare.row + i, currentSquare.col + i, board, true, this.player); i++);
         for (let i = 1; this.addSquareToArray(moves, currentSquare.row - i, currentSquare.col + i, board, true, this.player); i++);
-        for (let i = 1; this.addSquareToArray(moves, currentSquare.row + i, currentSquare.col - i, board, true, this.playerue); i++);
+        for (let i = 1; this.addSquareToArray(moves, currentSquare.row + i, currentSquare.col - i, board, true, this.player); i++);
         for (let i = 1; this.addSquareToArray(moves, currentSquare.row - i, currentSquare.col - i, board, true, this.player); i++);
 
         return moves;
+    }
+
+    getAvailableMoves(board) {
+        return this.discardIllegalMoves(this.getMovesToConsider(board), board.findPiece(this), board);
     }
 }

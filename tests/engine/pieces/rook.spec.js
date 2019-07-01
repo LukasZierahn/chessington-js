@@ -15,7 +15,7 @@ describe('Rook', () => {
         const rook = new Rook(Player.WHITE);
         board.setPiece(Square.at(1, 2), rook);
 
-        const moves = rook.getAvailableMoves(board);
+        const moves = rook.getMovesToConsider(board);
 
         const expectedMoves = [
             // Horizontal
@@ -31,7 +31,7 @@ describe('Rook', () => {
         const rook = new Rook(Player.WHITE);
         board.setPiece(Square.at(1, 2), rook);
 
-        const moves = rook.getAvailableMoves(board);
+        const moves = rook.getMovesToConsider(board);
 
         moves.should.have.length(14);
     });
@@ -42,7 +42,7 @@ describe('Rook', () => {
         board.setPiece(Square.at(4, 4), rook);
         board.setPiece(Square.at(4, 6), friendlyPiece);
 
-        const moves = rook.getAvailableMoves(board);
+        const moves = rook.getMovesToConsider(board);
 
         moves.should.not.deep.include(Square.at(4, 7));
     });
@@ -53,7 +53,7 @@ describe('Rook', () => {
         board.setPiece(Square.at(4, 4), rook);
         board.setPiece(Square.at(4, 6), opposingPiece);
 
-        const moves = rook.getAvailableMoves(board);
+        const moves = rook.getMovesToConsider(board);
 
         moves.should.not.deep.include(Square.at(4, 7));
     });
@@ -64,7 +64,7 @@ describe('Rook', () => {
         board.setPiece(Square.at(4, 4), rook);
         board.setPiece(Square.at(4, 6), opposingPiece);
 
-        const moves = rook.getAvailableMoves(board);
+        const moves = rook.getMovesToConsider(board);
 
         moves.should.deep.include(Square.at(4, 6));
     });
@@ -86,8 +86,24 @@ describe('Rook', () => {
         board.setPiece(Square.at(4, 4), rook);
         board.setPiece(Square.at(4, 6), friendlyPiece);
 
-        const moves = rook.getAvailableMoves(board);
+        const moves = rook.getMovesToConsider(board);
 
         moves.should.not.deep.include(Square.at(4, 6));
+    });
+
+    it('cant move such that you are in check', () => {
+        const rook = new Rook(Player.WHITE);
+        const rookBlack = new Rook(Player.BLACK);
+        const king = new King(Player.WHITE);
+        const kingBlack = new King(Player.BLACK);
+
+        board.setPiece(Square.at(2, 4), king);
+        board.setPiece(Square.at(3, 4), rook);
+        board.setPiece(Square.at(5, 4), rookBlack);
+        board.setPiece(Square.at(6, 4), kingBlack);
+
+        const moves = rook.getAvailableMoves(board);
+
+        moves.should.deep.eql([Square.at(4, 4), Square.at(5, 4)]);
     });
 });

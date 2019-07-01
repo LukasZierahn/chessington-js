@@ -7,7 +7,7 @@ export default class Pawn extends Piece {
         this.isPawn = true;
     }
 
-    getAvailableMoves(board) {
+    getMovesToConsider(board) {
         let moves = [];
 
         const currentSquare = board.findPiece(this);
@@ -37,5 +37,9 @@ export default class Pawn extends Piece {
         }
 
         return moves;
+    }
+
+    getAvailableMoves(board) {
+        return this.discardIllegalMoves(this.getMovesToConsider(board), board.findPiece(this), board);
     }
 }
