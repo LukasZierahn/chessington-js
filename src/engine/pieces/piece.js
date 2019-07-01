@@ -5,6 +5,8 @@ import GameSettings from './../gameSettings';
 export default class Piece {
     constructor(player) {
         this.player = player;
+        this.isKing = false;
+        this.isPawn = false;
     }
 
     getAvailableMoves(board) {
@@ -32,10 +34,16 @@ export default class Piece {
 
             const pieceOnSquare = board.getPiece(targetSquare);
             if (pieceOnSquare.player != player && !pieceOnSquare.isKing) {
+
                 targetArray.push(targetSquare);
             }
 
             return false
+        }
+
+        //preventing pawns from going diagonal without capturing
+        if (allowCapture == true && this.isPawn == true) {
+            return false;
         }
 
         targetArray.push(targetSquare);

@@ -3,7 +3,6 @@ import Piece from './piece';
 export default class Bishop extends Piece {
     constructor(player) {
         super(player);
-        this.isKing = false;
     }
 
     getAvailableMoves(board) {
