@@ -1,4 +1,5 @@
 import Square from './../square';
+import GameSettings from './../gameSettings';
 
 
 export default class Piece {
@@ -16,13 +17,20 @@ export default class Piece {
     }
 
     addSquareToArray(targetArray, row, col, board, checkIfEmpty) {
+        if (row < 0 || row >= GameSettings.BOARD_SIZE ||
+            col < 0 || col >= GameSettings.BOARD_SIZE) {
+                return false;
+        }
+
         let targetSquare = new Square(row, col);
 
         //checking if the square is occupied by anything
         if (board.getPiece(targetSquare) !== undefined && checkIfEmpty) {
-            return;
+            return false;
         }
 
         targetArray.push(targetSquare);
+
+        return true;
     }
 }
