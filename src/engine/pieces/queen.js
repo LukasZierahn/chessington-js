@@ -6,6 +6,22 @@ export default class Queen extends Piece {
     }
 
     getAvailableMoves(board) {
-        return new Array(0);
+        let moves = [];
+
+        const currentSquare = board.findPiece(this);
+
+        //Rook moves
+        for (let i = 1; this.addSquareToArray(moves, currentSquare.row + i, currentSquare.col, board, true); i++);
+        for (let i = 1; this.addSquareToArray(moves, currentSquare.row - i, currentSquare.col, board, true); i++);
+        for (let i = 1; this.addSquareToArray(moves, currentSquare.row, currentSquare.col + i, board, true); i++);
+        for (let i = 1; this.addSquareToArray(moves, currentSquare.row, currentSquare.col - i, board, true); i++);
+
+        //Bishop Moves
+        for (let i = 1; this.addSquareToArray(moves, currentSquare.row + i, currentSquare.col + i, board, true); i++);
+        for (let i = 1; this.addSquareToArray(moves, currentSquare.row - i, currentSquare.col + i, board, true); i++);
+        for (let i = 1; this.addSquareToArray(moves, currentSquare.row + i, currentSquare.col - i, board, true); i++);
+        for (let i = 1; this.addSquareToArray(moves, currentSquare.row - i, currentSquare.col - i, board, true); i++);
+
+        return moves;
     }
 }
