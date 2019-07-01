@@ -12,19 +12,18 @@ export default class Pawn extends Piece {
         const currentSquare = board.findPiece(this);
         
         if (this.player == Player.WHITE) {
-            this.addSquareToArray(moves, currentSquare.row + 1, currentSquare.col, board, true)
-
-            //allowing double moves if it is a first move
-            if (currentSquare.row == 1) {
-                this.addSquareToArray(moves, currentSquare.row + 2, currentSquare.col, board, true)
+            if (this.addSquareToArray(moves, currentSquare.row + 1, currentSquare.col, board, true)) {
+                //allowing double moves if it is a first move
+                if (currentSquare.row == 1) {
+                    this.addSquareToArray(moves, currentSquare.row + 2, currentSquare.col, board, true)
+                }
             }
-
         } else {
-            this.addSquareToArray(moves, currentSquare.row - 1, currentSquare.col, board, true)
-
-            //allowing double moves if it is a first move
-            if (currentSquare.row == 6) {
-                this.addSquareToArray(moves, currentSquare.row - 2, currentSquare.col, board, true)
+            if (this.addSquareToArray(moves, currentSquare.row - 1, currentSquare.col, board, true)) {
+                //allowing double moves if it is a first move
+                if (currentSquare.row == 6) {
+                    this.addSquareToArray(moves, currentSquare.row - 2, currentSquare.col, board, true)
+                }
             }
         }
 
